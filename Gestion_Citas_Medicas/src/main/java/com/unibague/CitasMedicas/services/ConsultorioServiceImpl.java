@@ -3,6 +3,9 @@ package com.unibague.CitasMedicas.services;
 
 import com.unibague.CitasMedicas.model.CitaGeneral;
 import com.unibague.CitasMedicas.model.Consultorio;
+import com.unibague.CitasMedicas.repository.CitaGeneralRepository;
+import com.unibague.CitasMedicas.repository.ConsultorioRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -11,37 +14,40 @@ import java.util.List;
 @Service
 public class ConsultorioServiceImpl implements ConsultorioService {
 
-    private final List<Consultorio> consultorios = new ArrayList<>();
+    @Autowired
+    private ConsultorioRepository consultorioRepository;
+    @Autowired
+    private CitaGeneralRepository citaGeneralRepository;
 
     @Override
+
     public Consultorio crearConsultorio(Consultorio consultorio) {
-        consultorios.add(consultorio);
-        return consultorio;
+
+        return consultorioRepository.save(consultorio);
     }
 
     @Override
     public Consultorio obtenerConsultorioPorId(String id) {
-        for (Consultorio consultorio : consultorios) {
-            if (consultorio.getId().equals(id)) {
-                return consultorio;
-            }
-        }
-        return null;
+        return consultorioRepository.findById(id).orElse(null);
     }
 
     @Override
     public List<Consultorio> obtenerTodosConsultorios() {
-        return new ArrayList<>(consultorios);
+        return consultorioRepository.findAll();
     }
 
+    @Override
     public Consultorio actualizarConsultorio(String id, Consultorio consultorioActualizado) {
-        for (int i = 0; i < consultorios.size(); i++) {
-            if (consultorios.get(i).getId().equals(id)) {
-                consultorios.set(i, consultorioActualizado);
-                // Actualiza las citas asociadas al consultorio
-                actualizarCitasConsultorio(consultorioActualizado);
-                return consultorioActualizado;
+        Consultorio consultorioExistente = consultorioRepository.findById(id).orElse(null);
+        if (consultorioExistente != null) {
+            consultorioExistente.setNombre(consultorioActualizado.getNombre());
+            if (consultorioActualizado.getCitas() != null) {
+                for (CitaGeneral cita : consultorioActualizado.getCitas()) {
+                    cita.setIdConsultorio(consultorioExistente.getId());
+                }
+                consultorioExistente.setCitas(consultorioActualizado.getCitas());
             }
+            return consultorioRepository.save(consultorioExistente);
         }
         return null;
     }
@@ -55,7 +61,7 @@ public class ConsultorioServiceImpl implements ConsultorioService {
 
     @Override
     public void eliminarConsultorio(String id) {
-        consultorios.removeIf(consultorio -> consultorio.getId().equals(id));
+        consultorioRepository.deleteById(id);
     }
 }
 

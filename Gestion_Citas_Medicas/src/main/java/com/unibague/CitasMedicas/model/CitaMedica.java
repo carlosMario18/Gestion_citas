@@ -1,9 +1,7 @@
 package com.unibague.CitasMedicas.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.Builder;
+import com.sun.istack.NotNull;
+import lombok.*;
 
 import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
@@ -19,7 +17,9 @@ public class CitaMedica {
     @Id
     private String  numeroIdentificacion;
     private String nombrePaciente;
+    @NotNull
     private LocalDate fecha;
+    @NotNull
     private  double costo;
     private  String  tipoCita;
 }

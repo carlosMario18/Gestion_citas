@@ -1,10 +1,7 @@
 package com.unibague.CitasMedicas.model;
 
 import java.time.LocalDate;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
 public class CitaGeneral extends CitaMedica {
@@ -12,6 +9,8 @@ public class CitaGeneral extends CitaMedica {
     private String observacion;
     private String idConsultorio;
 
+    @ManyToOne
+    private Consultorio consultorio;
 
     public CitaGeneral() {
     }
