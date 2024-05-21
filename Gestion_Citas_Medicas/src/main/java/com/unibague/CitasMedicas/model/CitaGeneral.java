@@ -10,6 +10,7 @@ public class CitaGeneral extends CitaMedica {
     private String idConsultorio;
 
     @ManyToOne
+    @JoinColumn(name = "consultorio_id")
     private Consultorio consultorio;
 
     public CitaGeneral() {

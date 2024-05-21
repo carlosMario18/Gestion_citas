@@ -2,10 +2,7 @@ package com.unibague.CitasMedicas.model;
 
 import lombok.*;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
 import java.util.List;
 
 import java.util.List;
@@ -19,7 +16,7 @@ public class Consultorio {
     @Id
     private String id;
     private String nombre;
-    @OneToMany(mappedBy = "consultorio")
+    @OneToMany(mappedBy = "consultorio" ,cascade = CascadeType.ALL)
     private List<CitaGeneral> citas;
 }
 
