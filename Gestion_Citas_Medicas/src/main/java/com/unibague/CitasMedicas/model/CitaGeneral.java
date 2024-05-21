@@ -10,7 +10,7 @@ public class CitaGeneral extends CitaMedica {
     private String idConsultorio;
 
     @ManyToOne
-    @JoinColumn(name = "consultorio_id")
+    @JoinColumn(name = "consultorio_id", nullable = false)
     private Consultorio consultorio;
 
     public CitaGeneral() {
