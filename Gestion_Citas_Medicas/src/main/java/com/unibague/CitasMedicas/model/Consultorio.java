@@ -13,8 +13,8 @@ import java.util.List;
 @NoArgsConstructor
 @Entity
 public class Consultorio {
-    @Id
     private String id;
+    @Id
     private String nombre;
     @OneToMany(mappedBy = "consultorio" ,cascade = CascadeType.ALL)
     private List<CitaGeneral> citas;

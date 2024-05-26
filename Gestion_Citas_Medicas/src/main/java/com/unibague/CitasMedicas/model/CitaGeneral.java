@@ -1,8 +1,16 @@
 package com.unibague.CitasMedicas.model;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import java.time.LocalDate;
 import javax.persistence.*;
 
+@Data
+@AllArgsConstructor
+@Builder
 @Entity
 public class CitaGeneral extends CitaMedica {
     private String nombreGeneralista;
@@ -10,9 +18,7 @@ public class CitaGeneral extends CitaMedica {
     private String idConsultorio;
 
     @ManyToOne
-    @JoinColumn(name = "consultorio_id", nullable = false)
     private Consultorio consultorio;
-
     public CitaGeneral() {
     }
 
@@ -23,27 +29,5 @@ public class CitaGeneral extends CitaMedica {
         this.idConsultorio = idConsultorio;
     }
 
-    public String getNombreGeneralista() {
-        return nombreGeneralista;
-    }
 
-    public void setNombreGeneralista(String nombreGeneralista) {
-        this.nombreGeneralista = nombreGeneralista;
-    }
-
-    public String getObservacion() {
-        return observacion;
-    }
-
-    public void setObservacion(String observacion) {
-        this.observacion = observacion;
-    }
-
-    public String getIdConsultorio() {
-        return idConsultorio;
-    }
-
-    public void setIdConsultorio(String idConsultorio) {
-        this.idConsultorio = idConsultorio;
-    }
 }
